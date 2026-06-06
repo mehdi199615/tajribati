@@ -10,12 +10,12 @@
             background-color: #121214;
             color: #ffffff;
             margin: 0;
-            padding: 0;
+            padding: 20px 0;
             display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: center;
-            height: 100vh;
+            min-height: 100vh;
+            box-sizing: border-box;
         }
         .container {
             text-align: center;
@@ -33,29 +33,26 @@
             font-size: 1.1rem;
             margin-bottom: 30px;
         }
-        .search-box {
-            position: relative;
+        textarea {
             width: 100%;
-        }
-        input[type="text"] {
-            width: 100%;
-            padding: 15px 20px;
-            font-size: 1.1rem;
+            height: 100px;
+            padding: 15px;
+            font-size: 1rem;
             border: 2px solid #333;
-            border-radius: 30px;
+            border-radius: 15px;
             background-color: #1a1a1e;
             color: #fff;
             box-sizing: border-box;
             outline: none;
             transition: 0.3s;
-            text-align: center;
+            text-align: right;
+            resize: none;
+            margin-bottom: 15px;
         }
-        input[type="text"]:focus {
+        textarea:focus {
             border-color: #00ff88;
-            box-shadow: 0 0 10px rgba(0, 255, 136, 0.2);
         }
         .btn {
-            margin-top: 20px;
             background-color: #00ff88;
             color: #121214;
             border: none;
@@ -65,10 +62,30 @@
             border-radius: 25px;
             cursor: pointer;
             transition: 0.3s;
+            width: 100%;
         }
         .btn:hover {
             background-color: #00cc6e;
-            transform: scale(1.05);
+        }
+        .experiences-section {
+            margin-top: 40px;
+            text-align: right;
+            width: 100%;
+        }
+        .experiences-section h2 {
+            color: #00ff88;
+            font-size: 1.4rem;
+            border-bottom: 1px solid #333;
+            padding-bottom: 10px;
+        }
+        .experience-card {
+            background-color: #1a1a1e;
+            border: 1px solid #333;
+            padding: 15px;
+            border-radius: 12px;
+            margin-bottom: 15px;
+            font-size: 1rem;
+            line-height: 1.6;
         }
     </style>
 </head>
@@ -78,12 +95,43 @@
         <h1>تجربتي</h1>
         <p>ابحث عن تجارب ومشاعر بشرية حقيقية.. بدون خوارزميات أو إعلانات.</p>
         
-        <div class="search-box">
-            <input type="text" placeholder="بماذا تشعر الآن؟ أو ما هي التجربة التي تبحث عنها؟">
+        <!-- صندوق كتابة التجربة -->
+        <textarea id="expInput" placeholder="اكتب تجربتك الحقيقية هنا لكي يستفيد منها الآخرون..."></textarea>
+        <button class="btn" onclick="addExperience()">انشر تجربتك الآن</button>
+
+        <!-- مساحة عرض التجارب -->
+        <div class="experiences-section">
+            <h2>تجارب البشر الأخيرة:</h2>
+            <div id="experiencesContainer">
+                <!-- التجارب الافتراضية المضافة مسبقاً -->
+                <div class="experience-card">"هاجرت لبلد جديد وحدي قبل عام. في البداية كان الشعور بالوحدة قاتلاً، لكنني تعلمت أن الاعتماد على النفس يصنع منك شخصاً أقوى بمراحل."</div>
+                <div class="experience-card">"فشلت في مشروعي الأول وخسرت كل مدخراتي. نصيحتي لكل شخص: لا تبدأ برأس مال كبير في البداية، اختبر الفكرة بأقل تكلفة ممكنة أولاً."</div>
+            </div>
         </div>
-        
-        <button class="btn" onclick="alert('قريباً سنربط محرك البحث بقاعدة البيانات الحية!')">ابحث عن تجربة</button>
     </div>
+
+    <script>
+        // دالة مخصصة لحفظ وعرض التجارب تلقائياً
+        function addExperience() {
+            var text = document.getElementById("expInput").value;
+            if (text.trim() === "") {
+                alert("الرجاء كتابة شيء أولاً قبل النشر!");
+                return;
+            }
+            
+            // إنشاء كارت جديد للتجربة المكتوبة
+            var container = document.getElementById("experiencesContainer");
+            var newCard = document.createElement("div");
+            newCard.className = "experience-card";
+            newCard.innerText = text;
+            
+            // إضافتها في أعلى القائمة
+            container.insertBefore(newCard, container.firstChild);
+            
+            // مسح الصندوق بعد النشر
+            document.getElementById("expInput").value = "";
+        }
+    </script>
 
 </body>
 </html>
